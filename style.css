@@ -1,0 +1,1619 @@
+/* --- 1. VARIABLES & RESET --- */
+:root {
+    --primary: #6D94C5;         /* Biru Kalem */
+    --primary-light: #CBDCEB;  /* Biru Sangat Muda */
+    --cream-light: #F5EFE6;    /* Krem Terang */
+    --cream-dark: #E8DFCA;     /* Krem Sand */
+    
+    /* --- TEMA TERANG (DEFAULT) --- */
+    --bg-dark: var(--cream-light);
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --border: rgba(30, 41, 59, 0.1); /* GANTI INI: Menampilkan garis pada tema terang */
+    --nav-bg: rgba(245, 239, 230, 0.85);
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* --- TEMA GELAP (AKTIF SAAT DIKLIK) --- */
+[data-theme="dark"] {
+    --bg-dark: #0f172a !important;        
+    --bg-card: #1e293b !important;
+    --text-main: #f8fafc !important; /* Warna putih terang untuk tulisan utama */
+    --text-dim: #cbd5e1 !important;  /* Warna abu terang untuk deskripsi */
+    --border: rgba(255, 255, 255, 0.1) !important; /* Tetap pertahankan ini untuk tema gelap */
+}
+
+/* Tambahkan ini di bawahnya untuk memastikan semua teks mengikuti variabel */
+[data-theme="dark"] body, 
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3, 
+[data-theme="dark"] p, 
+[data-theme="dark"] b,
+[data-theme="dark"] .hello,
+[data-theme="dark"] .description {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .description, 
+[data-theme="dark"] p {
+    color: var(--text-dim) !important;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); scroll-behavior: smooth; }
+body {
+    background-color: var(--bg-dark);
+    /* Menambahkan pola titik-titik halus */
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 30px 30px; /* Jarak antar titik */
+    background-attachment: fixed; /* Titik-titik tidak ikut bergeser saat di-scroll */
+}
+
+/* --- 2. HEADER & NAVIGASI (DIPERBAIKI AGAR SEJAJAR) --- */
+/* Header Utama */
+header {
+    display: flex;
+    justify-content: space-between; /* Membagi ruang ke kiri, tengah, kanan */
+    align-items: center;
+    position: fixed;
+    top: 20px; left: 5%; right: 5%; width: 90%;
+    height: 70px; padding: 0 30px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    z-index: 1000;
+}
+
+/* --- FIX LOGO FK --- */
+.logo {
+    font-family: 'Plus Jakarta Sans', sans-serif !important; 
+    font-size: 23px !important;
+    font-weight: 800 !important;
+    color: var(--text-main);
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: default;
+}
+
+.logo span {
+    color: var(--primary); /* Warna biru #6D94C5 pada huruf K */
+}
+
+/* Navigasi Tengah */
+nav {
+    display: flex;
+    gap: 10px;
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-dim) !important;
+    font-weight: 600;
+    padding: 8px 15px;
+    transition: 0.3s;
+}
+
+/* Bagian Kanan */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+
+/* Reset Tombol Tema */
+.theme-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2 rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+}
+
+/* Responsif Mobile - POSISI SUDAH DITUKAR */
+/* --- RESPONSIVE MOBILE FIX --- */
+@media (max-width: 992px) {
+    header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0 20px !important;
+    }
+
+    /* KUNCI: Membuat isi header-left (garis 3 & logo) berjejer ke samping */
+    .header-left {
+        display: flex !important; 
+        align-items: center !important;
+        gap: 15px; /* Jarak antara garis 3 dan logo */
+        flex: 1;
+    }
+
+    /* Garis 3 */
+    .menu-icon {
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 1100;
+        pointer-events: auto !important; /* Pastikan bisa diklik */
+    }
+
+    .menu-icon .bar {
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-main);
+        border-radius: 2px;
+    }
+
+    /* Logo FK */
+    .logo {
+        position: static !important; /* Hilangkan posisi absolute */
+        transform: none !important;
+        display: flex !important;
+        align-items: center !important;
+        pointer-events: auto !important;
+    }
+
+    .logo h1 {
+        font-size: 22px !important;
+        margin: 0 !important;
+        line-height: 1;
+    }
+
+    /* Tombol Tema (Bulan) tetap di paling kanan */
+    #theme-toggle {
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1100;
+        margin-left: auto;
+    }
+
+    /* Navigasi Dropdown */
+    nav {
+        display: none;
+        position: absolute;
+        top: 80px; left: 5%; right: 5%;
+        background: var(--nav-bg);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        padding: 15px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+    }
+
+    nav.active {
+        display: flex !important;
+    }
+}
+
+/* --- 3. HERO SECTION --- */
+.hero {
+    position: relative; display: flex; align-items: center; justify-content: space-between;
+    padding: 150px 10% 80px; min-height: 100vh; gap: 50px; overflow: hidden;
+}
+
+.line-decor { 
+    position: absolute; 
+    /* GANTI INI: Gunakan variabel --border agar warnanya adaptif */
+    background: var(--border); 
+    /* Naikkan opacity sedikit agar lebih tegas di layar terang */
+    opacity: 0.2; 
+    z-index: 1; 
+    pointer-events: none; 
+}
+
+/* Sisanya tetap sama */
+.line-decor-1 { width: 2px; height: 150%; bottom: -20%; left: 10%; transform: rotate(45deg); }
+.line-decor-2 { width: 2px; height: 100%; top: -10%; left: 45%; transform: rotate(45deg); }
+.line-decor-3 { width: 100%; height: 1px; bottom: 15%; right: -20%; transform: rotate(-10deg); }
+
+.hero-text, .hero-image { position: relative; z-index: 2; }
+.hero-text h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin: 10px 0; }
+.hero-text h1 span { color: var(--primary); background: none; -webkit-text-fill-color: initial; }
+
+.hello {
+    /* Ganti warna statis menjadi variabel */
+    color: var(--primary); 
+    letter-spacing: 5px;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.description {
+    /* Pastikan menggunakan variabel --text-dim agar jadi terang saat Dark Mode */
+    color: var(--text-dim) !important; 
+    margin-top: 10px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+/* --- KONTAINER TOMBOL --- */
+.buttons {
+    margin-top: 40px; 
+    display: flex;
+    gap: 15px;       
+    flex-wrap: wrap; 
+}
+
+/* --- GAYA DASAR TOMBOL (Disamakan agar tingginya pas) --- */
+/* --- GAYA DASAR TOMBOL --- */
+.btn-primary, .btn-outline {
+    padding: 14px 30px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1rem;
+    /* Tambahkan ini agar di desktop minimal lebarnya sama */
+    min-width: 180px; 
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border: 2px solid var(--primary);
+}
+
+.btn-outline {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: #fff;
+}
+@media (max-width: 768px) {
+    #nav-menu {
+        position: absolute;
+        top: 80px;          /* Jarak pas di bawah header */
+        right: 20px;        /* Menempel ke kanan agar minimalis */
+        width: 180px;       /* Ukuran diperkecil agar tidak memenuhi layar */
+        height: auto;
+        
+        background: var(--nav-bg) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        
+        display: flex;
+        flex-direction: column;
+        padding: 10px;      /* Padding lebih tipis */
+        gap: 5px;
+        border-radius: 20px; /* Sudut membulat minimalis */
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        
+        /* Animasi Muncul halus */
+        transition: all 0.3s ease;
+        transform: translateY(-10px);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 1000;
+    }
+
+    #nav-menu.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    #nav-menu a {
+        font-size: 0.9rem;  /* Ukuran font lebih kecil */
+        font-weight: 600;
+        color: var(--text-main) !important;
+        text-decoration: none;
+        padding: 10px 15px;
+        text-align: left;   /* Rata kiri lebih rapi untuk menu kecil */
+        width: 100%;
+        border-radius: 12px;
+        transition: 0.2s;
+    }
+
+    /* Efek highlight saat disentuh */
+    #nav-menu a:active, #nav-menu a:hover {
+        background: rgba(109, 148, 197, 0.15);
+        color: var(--primary) !important;
+    }
+}
+
+.image-box { 
+    width: 350px; 
+    height: 350px; 
+    border-radius: 50% 50% 45% 55% / 55% 45% 55% 45%; 
+    overflow: hidden; 
+    border: 5px solid var(--primary); 
+    box-shadow: 0 0 50px rgba(109, 148, 197, 0.2); 
+    
+    /* --- PERBAIKAN POSISI (GESER KE KANAN) --- */
+    /* Angka pertama (20px) menggeser ke kanan. 
+       Angka kedua (-10px) tetap menjaga posisi agak ke atas. */
+    transform: translate(20px, -10px); 
+    
+    transition: transform 0.3s ease-out; 
+}
+
+.image-box img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/* Bonus: Efek gelombang bergerak pelan saat disentuh kursor */
+.image-box:hover {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: scale(1.02);
+}
+
+/* --- 4. SKILLS & RESUME (DIKEMBALIKAN & DIRAPIKAN) --- */
+.section-title { 
+    text-align: center; 
+    margin-bottom: 30px; /* Kurangi juga sedikit margin bawahnya */
+    padding-top: 10px;   /* GANTI DARI 100px KE 20px agar rapat */
+}
+.underline { width: 60px; height: 4px; background: var(--primary); margin: 10px auto; }
+.about, .skills, .resume, .projects, .contact { padding: 30px 10%; }
+
+.skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.skill-category { background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
+.skill-category h3 { margin-bottom: 20px; color: var(--primary); }
+.skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.skill-item { 
+    background: var(--primary-light); color: #1e293b !important; 
+    padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; 
+}
+.resume-container { 
+    display: flex; 
+    flex-direction: column; 
+    /* UBAH: Perbesar jarak antar kartu agar tidak terlihat menumpuk */
+    gap: 45px; 
+}
+
+.resume-card { 
+    background: var(--bg-card); 
+    padding: 30px; 
+    border-radius: 20px; 
+    border: 1px solid var(--border); 
+    transition: 0.3s; 
+    /* TAMBAHKAN: Memberikan ruang konsisten di bawah teks */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 140px; /* Menjaga agar tinggi kartu SMP dan MI lebih seragam */
+}
+
+.resume-card p {
+    margin-top: 10px;
+    line-height: 1.6;
+    /* Memberi sedikit margin bawah agar tidak langsung menyentuh batas kartu */
+    margin-bottom: 5px; 
+}
+
+.resume-card:hover { 
+    border-color: var(--primary); 
+    transform: translateX(10px); 
+}
+
+/* --- 5. PROJECTS GRID --- */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.category-label { grid-column: 1 / -1; color: var(--primary); font-size: 1.4rem; margin: 40px 0 10px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+
+/* --- 1. MEMBUAT KARTU ADAPTIF TEMA GELAP --- */
+
+/* Container kartu utama */
+/* Container Utama untuk 3 Kolom */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Pasti 3 kolom di laptop */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Card Styling (Dikecilkan) */
+.project-card {
+    background: var(--card-bg); /* Mengikuti variabel tema */
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center; /* Agar icon & teks di tengah */
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 280px; /* Menjaga tinggi tetap seragam */
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Memperkecil Gambar Proyek */
+.project-img img {
+    width: 100%;
+    height: 150px; /* Tinggi dibatasi agar kartu tidak lonjong */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Icon Kategori */
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+/* Judul & Deskripsi */
+.project-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* Styling dasar tombol agar teks terlihat jelas */
+/* Pastikan container kartu menggunakan flex center */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Menjajajkan semua elemen ke tengah secara horizontal */
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+}
+
+/* Styling Tombol agar presisi di tengah */
+.btn-view-category, .github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Warna & Teks */
+    background-color: #4673aa; /* Warna biru primary */
+    color: #ffffff !important; /* Memastikan tulisan putih terlihat jelas */
+    
+    /* Ukuran & Posisi */
+    padding: 12px 28px;
+    margin-top: auto; /* Mendorong tombol ke bawah kartu jika tinggi berbeda */
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: none;
+    
+    /* Transisi */
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: fit-content; /* Tombol tidak akan melebar memenuhi kartu */
+}
+
+/* Efek Hover */
+.btn-view-category:hover, .github-link:hover {
+    background-color: #355d8a;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(70, 115, 170, 0.3);
+}
+
+/* Tambahan untuk ikon di dalam tombol */
+.btn-view-category i {
+    margin-left: 8px;
+    transition: 0.3s;
+}
+
+.btn-view-category:hover i {
+    transform: translateX(5px);
+}
+
+/* KHUSUS UNTUK TEMA TERANG (Sesuai image_e8ff4a.jpg) */
+/* Jika tombolnya terlalu pucat, kita beri warna biru yang lebih tegas */
+:root {
+    --primary: #4673aa; 
+}
+
+/* KHUSUS UNTUK TEMA GELAP (Sesuai image_e8f823.jpg) */
+[data-theme="dark"] .btn-view-category, 
+[data-theme="dark"] .github-link {
+    background-color: var(--primary);
+    color: #ffffff !important;
+}
+
+/* Responsif (Tablet & HP) */
+@media (max-width: 1024px) {
+    .project-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .project-grid { grid-template-columns: 1fr; }
+}
+
+/* --- PERUBAHAN SAAT TEMA GELAP AKTIF --- */
+[data-theme="dark"] .project-card {
+    background-color: #1e293b; /* Abu-abu gelap kebiruan (blend dengan bg) */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Border tipis agar terlihat */
+}
+
+[data-theme="dark"] .project-card-header {
+    background-color: #0a192f; /* Biru yang jauh lebih gelap */
+}
+
+/* Perbaikan Teks Deskripsi di Tema Gelap */
+[data-theme="dark"] .project-card-body p {
+    color: #e2e8f0; /* Menjadi putih pudar agar terbaca jelas */
+}
+
+[data-theme="dark"] .project-card-body h3 {
+    color: #ffffff; /* Judul 'Fotonix' jadi putih bersih */
+}
+
+[data-theme="dark"] .view-project {
+    color: #38bdf8; /* Warna link biru muda neon agar menonjol */
+}
+.project-img {
+    width: calc(100% + 40px); 
+    margin: -20px -20px 15px -20px; 
+    
+    /* UBAH INI: Tambah tingginya agar aplikasi terlihat lebih penuh */
+    height: 250px !important; 
+    
+    overflow: hidden;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.project-img img {
+    width: 100%;
+    height: 100%;
+    
+    /* Pastikan ini tetap cover agar tidak gepeng */
+    object-fit: cover !important; 
+    
+    /* Fokuskan sedikit ke arah atas agar header aplikasi kelihatan */
+    object-position: top !important; 
+    
+    transition: transform 0.4s ease;
+}
+
+/* Efek Zoom saat Kartu Disentuh */
+.project-card:hover .project-img img {
+    transform: scale(1.1);
+}
+
+/* Memastikan kartu tidak pecah saat ada foto */
+.project-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    overflow: hidden; /* Penting agar sudut foto ikut melengkung sesuai kartu */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+.project-tags span { background: var(--primary-light); color: #1e293b !important; padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; }
+
+.github-link { display: inline-block; color: var(--primary); text-decoration: none; font-weight: 700; }
+
+/* Container Filter */
+.project-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Sembunyikan grup proyek secara default */
+.project-group {
+    display: none; /* KUNCI: Sembunyikan semua rincian */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+/* Tampilkan hanya yang aktif */
+.project-group.active {
+    display: grid; /* Tampilkan rincian saat aktif */
+}
+
+/* Gaya Khusus Kartu Kategori */
+.category-card {
+    cursor: pointer;
+    text-align: center;
+    padding: 45px 30px !important;
+    border: 2px solid transparent;
+    transition: 0.4s ease-in-out;
+}
+
+.category-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(109, 148, 197, 0.2);
+}
+
+.category-icon { font-size: 3.5rem; margin-bottom: 20px; }
+
+.btn-view-category {
+    margin-top: 25px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-back {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.project-group-detail { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* Styling Section Kontak Rinci */
+.contact-detailed {
+    padding: 80px 10%;
+    background: transparent;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.contact-card-detail {
+    background: var(--bg-card);
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.contact-card-detail:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+}
+
+.contact-card-detail i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.btn-contact {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Styling Footer (Tetap Minimalis) */
+.site-footer {
+    padding: 80px 20px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-stack {
+    display: flex !important;
+    flex-direction: column !important; /* MEMAKSA ELEMEN URUT KE BAWAH */
+    align-items: center !important;
+    gap: 35px; /* MEMBERI JARAK ANTAR BARIS */
+    max-width: 800px;
+    width: 100%;
+}
+
+.quote-text {
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.8 !important;
+    margin: 0 !important;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    position: static !important; /* MEMATIKAN TUMPANGAN TEKS */
+}
+
+.footer-nav-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-nav-menu a {
+    position: static !important; /* AGAR TIDAK TERBANG KE ATAS QUOTE */
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.f-dot {
+    color: var(--primary);
+    opacity: 0.5;
+}
+
+.footer-icons-row {
+    display: flex !important;
+    flex-direction: row !important; /* IKON BERJEJER KE SAMPING */
+    gap: 20px;
+    justify-content: center;
+}
+
+.footer-icons-row a {
+    position: static !important; /* AGAR TIDAK MENUMPUK DI KIRI */
+    font-size: 1.6rem;
+    color: var(--primary);
+    transition: 0.3s;
+}
+
+.footer-icons-row a:hover {
+    transform: translateY(-5px);
+    color: var(--text-main);
+}
+
+.copyright-text {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin: 0 !important;
+    text-align: center;
+}
+
+/* Pastikan elemen ikon tidak punya margin */
+.social-icons a {
+    width: 45px;
+    height: 45px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;    
+    justify-content: center; 
+    color: var(--primary);
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: 0.3s ease;
+    
+    /* KUNCI BARU: Memastikan tidak ada ruang kosong di sekitar link */
+    line-height: 1; 
+    overflow: hidden; /* Mencegah elemen dalam keluar jalur */
+}
+
+/* PAKSA IKONNYA KE TENGAH */
+.social-icons a i {
+    display: block !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Jika masih kurang naik, aktifkan transform di bawah ini: */
+    /* transform: translateY(-1px); */ 
+}
+
+/* Garis Pembatas Vertikal - Pastikan sejajar */
+.nav-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border);
+    margin: 0 10px;
+    opacity: 0.5;
+    /* KUNCI: Biar garisnya tidak naik-turun di HP */
+    display: inline-block;
+    align-self: center;
+}
+
+/* Penyesuaian Tombol Tema agar lebih kecil di Nav */
+.theme-btn {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: 1.1rem !important;
+    color: var(--text-main) !important;
+}
+
+.theme-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Responsif untuk Mobile */
+@media (max-width: 768px) {
+    .nav-socials {
+        margin-left: 0;
+        margin-top: 20px;
+        justify-content: center;
+    }
+}
+
+/* --- TAMPILAN DEFAULT (LAPTOP) --- */
+.menu-icon {
+    display: none; /* Sembunyi di laptop */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.menu-icon .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* --- TAMPILAN HP (MOBILE) --- */
+@media (max-width: 992px) {
+    header {
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    /* Munculkan Garis 3 di paling kiri */
+    .menu-icon {
+        display: flex;
+        order: 1; /* Posisi ke-1 (kiri) */
+    }
+
+    /* Logo FK tetap terlihat di kanan */
+    .logo {
+        order: 3; /* Posisi ke-3 (kanan) */
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-weight: 800 !important;
+    }
+
+    /* Bagian kanan (sosmed) sembunyi atau pindah ke tengah */
+    .header-right {
+        order: 2; /* Posisi ke-2 (tengah) */
+    }
+
+    /* Menu navigasi teks sembunyi, hanya muncul saat garis 3 diklik */
+    nav {
+        display: none;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--nav-bg);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    nav.active {
+        display: flex;
+    }
+}
+
+/* Menengahkan kontainer tombol */
+.about-buttons {
+    display: flex;
+    justify-content: center; /* Menggeser ke tengah secara horizontal */
+    margin-top: 30px;        /* Memberi jarak dari teks di atasnya */
+}
+
+
+/* Pastikan desain tombolnya tetap rapi */
+.btn-journey {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s ease;
+}
+
+.btn-journey:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px); /* Efek sedikit mengangkat saat di-hover */
+}
+
+
+/* Animasi ikon panah saat tombol di-hover */
+.btn-journey i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-journey:hover i {
+    transform: translateX(4px);
+}
+
+/* --- JOURNEY PAGE STYLES --- */
+.journey-page {
+    padding: 120px 10% 80px;
+    min-height: 100vh;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.journey-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-main) !important; /* Agar teks berubah jadi hitam di mode terang */
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+/* Mengatur warna kutipan kecil di dalam kartu agar tidak terlalu mencolok */
+.journey-card p i {
+    color: var(--text-main);
+    opacity: 0.7;
+}
+
+/* Perbaiki juga titik-titik grid agar tidak terlalu terang di dark mode */
+[data-theme="dark"] body::before {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.2px);
+}
+
+/* Container Utama Journey */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Membuat 2 kolom jika layar lebar */
+    gap: 20px;
+    padding: 20px 0;
+    position: relative;
+}
+
+/* Menghilangkan garis vertikal panjang jika ingin desain kartu bersih */
+.timeline::before {
+    display: none; 
+}
+
+/* Container Utama: Mengubah jadi 2 kolom */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Menghilangkan garis vertikal dan dot agar lebih bersih */
+.timeline::before, .timeline-dot {
+    display: none;
+}
+
+.timeline-item {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.timeline-content {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 15px;
+    height: 100%; /* Agar tinggi kotak sama rata */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Styling Tanggal di dalam Kartu */
+.timeline-date {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(70, 115, 170, 0.1);
+    border-radius: 20px;
+}
+
+.timeline-content h3 {
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+.univ-name {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    opacity: 0.8;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -37px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.timeline-content {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+}
+
+.timeline-content:hover {
+    border-color: var(--primary);
+    transform: translateX(10px);
+}
+
+.timeline-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.timeline-content p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+}
+
+/* 1. Nama Institusi (Universitas/Sekolah) */
+.timeline-content p:first-of-type {
+    color: var(--primary); /* Gunakan warna biru primer agar menonjol */
+    font-weight: 700;      /* Buat lebih tebal dari deskripsi */
+    font-size: 1.1rem;     /* Sedikit lebih besar */
+    margin-bottom: 8px;    /* Beri jarak dengan teks di bawahnya */
+}
+
+/* 2. Teks Deskripsi (Keterangan di dalam tanda kutip) */
+.timeline-content p:last-of-type {
+    color: var(--text-muted); /* Gunakan warna abu-abu agar lebih soft */
+    font-weight: 400;         /* Ketebalan standar */
+    font-size: 0.95rem;       /* Sedikit lebih kecil */
+    font-style: italic;       /* Opsional: buat miring untuk kesan kutipan */
+    line-height: 1.6;         /* Beri ruang antar baris agar nyaman dibaca */
+    opacity: 0.8;             /* Tambahkan transparansi tipis */
+}
+
+/* 3. Tambahkan Variabel Warna jika belum ada */
+:root {
+    --text-muted: #6c757d; /* Warna abu-abu standar untuk tema terang */
+}
+
+[data-theme="dark"] {
+    --text-muted: #a0a0a0; /* Warna abu-abu terang untuk tema gelap */
+}
+
+/* --- BACKGROUND ANIMATION STYLES --- */
+
+/* Kontainer utama latar belakang */
+.background-animation {
+    position: fixed; /* Tetap di tempat saat di-scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Berada di belakang konten utama */
+    overflow: hidden;
+    background-color: var(--bg-dark); /* Menggunakan warna dasar tema */
+}
+
+.mesh-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Supaya ada di paling belakang */
+    background-color: var(--bg-dark);
+    /* Ini yang bikin efek awan biru di pojok-pojok */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(109, 148, 197, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(109, 148, 197, 0.2) 0px, transparent 50%);
+}
+
+/* Tambahan tekstur titik-titik agar terlihat lebih 'TI' */
+.mesh-background::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+}
+
+/* --- MOBILE NAVIGATION --- */
+@media (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: -100%; /* Sembunyi di kanan luar layar */
+        width: 200px;
+        height: auto;
+        background: var(--nav-bg);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+        border-radius: 20px;
+        transition: 0.4s ease; /* Efek slide yang halus */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    /* KUNCI: Saat diklik, posisi right jadi 20px agar muncul ke layar */
+    .nav-links.active {
+        right: 20px;
+    }
+}
+
+/* --- PENGATUR TAMPILAN MENU --- */
+
+/* 1. Sembunyikan section Keahlian dan Karya secara default saat web dibuka */
+#skills, #projects , #about, #contact{
+    display: none;
+}
+
+/* 2. Efek transisi halus saat section muncul */
+.section-active {
+    display: block !important;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+[data-theme="dark"] #nav-menu a {
+    color: #0f172a !important;
+}
+/* --- GARIS PEMBATAS SECTIONS --- */
+.section-divider {
+    width: 80%;               /* Garis tidak full agar terlihat estetik */
+    height: 1px;              /* Tipis saja */
+    background: var(--border); /* Mengikuti warna border yang sudah kita gelapkan */
+    margin: 0 auto;           /* Posisi di tengah */
+    opacity: 0.5;             /* Agar tidak terlalu mencolok */
+}
+
+/* Beri sedikit jarak pada section kontak agar tidak menempel garis */
+#contact {
+    padding-top: 50px;
+}
+
+/* Membuat lapisan transparan di atas seluruh website */
+/* --- TETAP PERTAHANKAN GRID & CAHAYA LAMA KAMU --- */
+/* --- PAKSA TITIK-TITIK MUNCUL --- */
+body {
+    /* Mengambil warna background dari style.css kamu */
+    background-color: var(--bg-dark) !important;
+    color: var(--text-main);
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.3s ease;
+
+    /* 1. EFEK TITIK-TITIK (Kunci: Warna Biru Transparan agar Terlihat) */
+    background-image: radial-gradient(rgba(109, 148, 197, 0.4) 1.5px, transparent 1.5px) !important;
+    background-size: 30px 30px !important;
+    background-attachment: fixed !important;
+    
+    position: relative;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* 2. EFEK GRADASI CAHAYA (Bias Biru di Pojok) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(at 0% 0%, rgba(109, 148, 197, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(109, 148, 197, 0.15) 0px, transparent 50%) !important;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 3. MATIKAN SEMUA EFEK RAIN/KODE BERGERAK */
+.code-rain, #code-bg, .falling-code, #code-canvas {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Tambahkan cahaya satu lagi di kiri bawah */
+.main-wrapper, #contact {
+    position: relative;
+}
+
+
+#contact::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(70, 115, 170, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: -1;
+}
+
+/* Penyesuaian untuk Tema Gelap */
+[data-theme="dark"] body::before {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.2px);
+}
+
+/* Merapatkan jarak antar semua section */
+.about, .skills, .resume, .projects, .contact {
+    padding-top: 20px !important;    /* Merapatkan jarak atas dengan section sebelumnya */
+    padding-bottom: 60px !important; /* Jarak standar antar konten */
+    min-height: auto !important;     /* Mencegah section memaksa tinggi satu layar */
+}
+
+/* Khusus section terakhir (Kontak) agar tidak mepet Footer */
+.contact {
+    padding-bottom: 120px !important; /* Memberikan ruang lebih sebelum footer */
+}
+
+/* Menghilangkan padding berlebih pada judul di setiap section */
+.section-title {
+    padding-top: 0 !important;
+    margin-top: 10px !important;
+    margin-bottom: 40px !important;
+}
+/* RESET TOTAL UNTUK FOOTER */
+.footer-final-fix {
+    display: block !important; /* Mematikan flex luar */
+    padding: 60px 0 !important;
+    width: 100% !important;
+    background: var(--bg-card) !important;
+    border-top: 1px solid var(--border) !important;
+    position: relative !important;
+    clear: both !important; /* Membersihkan float yang mungkin tertinggal */
+}
+
+.footer-container-fix {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important; /* PAKSA URUT KE BAWAH */
+    align-items: center !important;
+    gap: 30px !important; /* Jarak antar baris */
+}
+
+/* Mematikan semua 'absolute' yang bikin teks tumpang tindih */
+.footer-container-fix div, 
+.footer-container-fix p, 
+.footer-container-fix a {
+    position: static !important; 
+    float: none !important;
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.footer-row-quote p {
+    text-align: center !important;
+    line-height: 1.6 !important;
+    font-size: 1.1rem !important;
+    display: block !important;
+}
+
+.footer-row-nav {
+    display: flex !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+}
+
+.footer-row-nav a {
+    color: var(--text-main) !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+.footer-row-social {
+    display: flex !important;
+    gap: 25px !important;
+    justify-content: center !important;
+}
+
+.footer-row-social a i {
+    font-size: 1.8rem !important;
+    color: var(--primary) !important;
+}
+
+.footer-row-copy p {
+    font-size: 0.85rem !important;
+    opacity: 0.6 !important;
+}
+
+/* Tambahkan ini di paling bawah file style.css kamu */
+@media (max-width: 768px) {
+    .hero {
+        /* UBAH INI: Menghapus '-reverse' agar teks di atas dan foto di bawah */
+        flex-direction: column !important; 
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important; 
+        padding: 100px 20px 50px !important; 
+        min-height: auto !important;
+        gap: 30px !important;
+    }
+
+    .hero-text {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        order: 1; /* Memastikan teks tetap di urutan pertama */
+    }
+
+    .hero-image {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        order: 2; /* Memastikan gambar berada di urutan kedua (bawah) */
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem !important; 
+        text-align: center !important;
+    }
+
+    .hello {
+        letter-spacing: 3px !important; 
+        /* Pastikan ukuran ini sudah sesuai keinginanmu */
+        font-size: 2rem !important; 
+        margin-bottom: 15px !important;
+    }
+
+    .description {
+        text-align: center !important;
+        margin: 10px auto 20px !important;
+        max-width: 100% !important;
+    }
+
+    .buttons {
+        justify-content: center !important; 
+        width: 100% !important;
+        gap: 10px !important;
+        
+    }
+    
+    .line-decor {
+        display: none !important; 
+    }
+}
+@media (max-width: 768px) {
+    /* Mengatur kutipan agar punya 'ruang napas' */
+    .footer-row-quote p {
+        font-size: 0.9rem !important; /* Ukuran sedikit lebih kecil agar elegan */
+        line-height: 1.6 !important;  /* Jarak antar baris lebih lega */
+        padding: 0 25px !important;   /* Memberi jarak kiri-kanan agar tidak mepet */
+        margin: 0 auto 20px !important;
+        max-width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Mengatur navigasi footer agar tidak berjejal */
+    .footer-nav {
+        display: flex !important;
+        flex-wrap: wrap !important; /* Agar menu turun ke bawah jika tidak muat */
+        justify-content: center !important;
+        gap: 10px 15px !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 20px !important;
+    }
+}
+/* --- CSS UNTUK TOMBOL HKI SEBELAHAN --- */
+
+/* 1. Container agar tombol berjajar ke samping */
+.button-group-row {
+    display: flex !important; 
+    gap: 10px;               /* Jarak antar tombol */
+    justify-content: center; /* Posisi di tengah kartu */
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* 2. Styling Tombol Kecil (btn-small) */
+.btn-small {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: #4673aa !important; /* Warna biru primary kamu */
+    color: #ffffff !important;           /* Tulisan putih bersih */
+    padding: 8px 16px !important;        /* Ukuran lebih kecil/pendek */
+    border-radius: 30px !important;
+    font-size: 0.8rem !important;        /* Font lebih kecil agar pas */
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;                 /* Tulisan tidak turun ke bawah */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 3. Efek saat kursor di atas tombol */
+.btn-small:hover {
+    background-color: #355d8a !important; /* Biru lebih gelap */
+    transform: translateY(-2px);           /* Efek melayang sedikit */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 4. Supaya rapi di HP (jadi tumpuk atas bawah) */
+@media (max-width: 480px) {
+    .button-group-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .btn-small {
+        width: 100%;
+    }
+}
+
+/* Khusus mengecilkan container detail HKI */
+#hki-group .project-card {
+    max-width: 360px;    /* Ukuran kartu lebih ramping & pas */
+    margin: 20px auto;   /* Otomatis di tengah secara horizontal */
+    padding: 25px;       /* Ruang dalam agar tidak sesak */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Semua isi kartu jadi center */
+    text-align: center;
+}
+
+/* Mengatur baris tombol agar sejajar ke samping */
+.button-group-row {
+    display: flex !important;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Tombol kecil yang estetik */
+.btn-small {
+    background-color: #4673aa !important;
+    color: #ffffff !important;
+    padding: 8px 16px !important;
+    border-radius: 30px !important;
+    font-size: 0.8rem !important;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: 0.3s;
+    border: none;
+    min-width: 100px; /* Lebar minimal agar tombol seragam */
+}
+
+.btn-small:hover {
+    background-color: #355d8a !important;
+    transform: translateY(-2px);
+}
+/* Mengatur wadah utama grid agar otomatis 4 kolom atau 2x2 */
+.project-grid {
+    display: grid;
+    /* auto-fit minmax membuat layout fleksibel: berjejer sesuai space layar */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 20px; /* Jarak antar kotak card */
+    padding: 15px 0;
+    width: 100%;
+}
+
+/* Memastikan semua card memiliki tinggi yang sama rata */
+.project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Menjaga tombol "Lihat Karya" tetap sejajar di bawah */
+    height: 100%; 
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Mengatur ukuran gambar agar seragam dan tidak merusak layout */
+.project-img {
+    width: 100%;
+    height: 160px; /* Atur tinggi gambar seragam (bisa disesuaikan, misal 160px - 180px) */
+    overflow: hidden;
+}
+
+.project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Gambar akan terpotong rapi secara proporsional */
+    object-position: top; /* Memperlihatkan screenshot bagian atas web/aplikasi */
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Felisya Kamilaturrosyidah | Portofolio</title>
+
+    <link rel="icon" type="image/png" href="mylogo.png">
+    
+    <link rel="apple-touch-icon" href="mylogo.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journey | Felisya</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+    /* 1. VARIABEL WARNA ADAPTIF */
+    /* 1. VARIABEL WARNA (Pastikan sama dengan index.html) */
+    :root {
+        --bg-color: #ffffff;
+        --text-main: #333333;
+        --primary: #4673aa;
+        --card-bg: #f8fafc;
+        --nav-bg: rgba(255, 255, 255, 0.8);
+        --border: rgba(0, 0, 0, 0.1);
+    }
+
+    /* KUNCI: Pastikan warna ini sama persis dengan style.css utamamu */
+    [data-theme="dark"] {
+        --bg-color: #0f172a; /* Cek apakah di index.html kamu pakai #0f172a atau #111111 */
+        --text-main: #f1f5f9;
+        --card-bg: #1e293b;
+        --nav-bg: rgba(15, 23, 42, 0.9);
+        --border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+        /* Gunakan !important jika background masih membandel putih/berbeda */
+        background-color: var(--bg-color) !important; 
+        color: var(--text-main);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        margin: 0;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* 3. LAYOUT GRID 3 KOLOM (Kunci Sejajar) */
+    .journey-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 Kolom sejajar di Laptop */
+        gap: 25px;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+        align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+        .journey-grid {
+            grid-template-columns: 1fr; /* Jadi 1 kolom di HP/Tablet */
+            max-width: 800px;
+        }
+    }
+
+    /* 4. STYLING KARTU (SERAGAM) */
+    .journey-card-box {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        height: auto;
+    }
+
+
+    
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        color: var(--primary);
+    }
+
+    .card-header i { font-size: 1.5rem; }
+    .card-header h3 { margin: 0; font-size: 1.3rem; }
+
+    /* 5. DATA DIRI STYLING */
+    .info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .info-item {
+        font-size: 0.9rem;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .info-item strong { color: var(--primary); display: block; font-size: 0.75rem; text-transform: uppercase; }
+
+    /* 6. LIST STYLING (Untuk Pendidikan & Organisasi) */
+    .item-list { display: flex; flex-direction: column; }
+
+    .list-entry {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        transition: 0.3s;
+    }
+
+    .list-entry:last-child { border-bottom: none; }
+
+    .list-year {
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 4px;
+    }
+
+    .list-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .list-sub {
+        font-size: 0.85rem;
+        opacity: 0.7;
+        margin: 2px 0 0 0;
+    }
+
+    /* 7. HEADER & SECTION TITLE */
+    .journey-page { padding-top: 100px; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .underline { width: 50px; height: 4px; background: var(--primary); margin: 10px auto; border-radius: 10px; }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        position: fixed;
+        width: 90%;
+        top: 0;
+        z-index: 1000;
+        background: var(--nav-bg);
+        backdrop-filter: blur(10px);
+    }
+
+    .logo { font-weight: 800; font-size: 1.5rem; }
+    .logo span { color: var(--primary); }
+    nav a { text-decoration: none; color: var(--text-main); font-weight: 600; }
+    .btn-journey { text-decoration: none; color: var(--primary); font-weight: 700; }
+
+/* Update Styling Kartu Journey */
+.journey-card-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    height: auto;
+    
+    /* TAMBAHKAN INI: Biar pergerakan halus */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+}
+
+/* EFEK TIMBUL SAAT CURSOR MENYENTUH CARD */
+.journey-card-box:hover {
+    transform: translateY(-10px); /* Membuat kartu naik ke atas */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Bayangan lebih tebal & dramatis */
+    border-color: var(--primary); /* Garis tepi berubah warna sesuai tema */
+}
+
+/* Efek cahaya tambahan untuk Tema Gelap agar makin estetik */
+[data-theme="dark"] .journey-card-box:hover {
+    box-shadow: 0 10px 30px rgba(70, 115, 170, 0.25);
+    background: linear-gradient(145deg, var(--card-bg), #24334d);
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">F<span>K</span></div>
+        <nav><a href="index.html">Beranda</a></nav>
+        <div class="header-right">
+            <a href="index.html" class="btn-journey">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+    </header>
+
+    <section class="journey-page">
+        <div class="section-title">
+            <h2>Perjalananku</h2>
+            <div class="underline"></div>
+        </div>
+
+        <div class="journey-grid">
+            
+            <div class="journey-card-box">
+                <div class="card-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>Data Diri</h3>
+                </div>
+                <div class="info-list">
+                    <div class="info-item"><strong>Nama Lengkap</strong> Felisya Kamilaturrosyidah</div>
+                    <div class="info-item"><strong>Tempat Lahir</strong> Lamongan, 22 Februari 2006</div>
+                    <div class="info-item"><strong>Status</strong> Mahasiswa Aktif</div>
+                    <div class="info-item"><strong>Email</strong> felisyakamilaa@gmail.com</div>
+                </div>
+            </div>
+
+            <div class="journey-card-box">
+                <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Pendidikan</h3>
+                </div>
+                <div class="item-list">
+    <div class="list-entry" onclick="window.open('https://www.unesa.ac.id', '_blank')" style="cursor:pointer">
+        <div class="list-year">2024 - Sekarang</div>
+        <p class="list-title">S1 Pendidikan Teknologi Informasi</p>
+        <p class="list-sub">Universitas Negeri Surabaya</p>
+    </div>
+
+    <div class="list-entry" onclick="window.open('https://www.instagram.com/sman1lmg/', '_blank')" style="cursor:pointer">
+        <div class="list-year">2021 - 2024</div>
+        <p class="list-title">MIPA</p>
+        <p class="list-sub">SMA Negeri 1 Lamongan</p>
+    </div>
+
+    <div class="list-entry" onclick="window.open('https://www.instagram.com/smpnegeri1lamongan/', '_blank')" style="cursor:pointer">
+        <div class="list-year">2018 - 2021</div>
+        <p class="list-title">SMP Negeri 1 Lamongan</p>
+    </div>
+
+    <div class="list-entry" onclick="window.open('https://mi.islamiyah.sch.id/', '_blank')" style="cursor:pointer">
+        <div class="list-year">2012 - 2018</div>
+        <p class="list-title">MI Islamiyah Kedungmegarih</p>
+    </div>
+</div>
+            </div>
+
+            <div class="journey-card-box">
+                <div class="card-header">
+                    <i class="fas fa-users"></i>
+                    <h3>Organisasi</h3>
+                </div>
+                <div class="item-list">
+                    <div class="list-entry">
+                        <div class="list-year">2025</div>
+                        <p class="list-title">Divisi Keamanan</p>
+                        <p class="list-sub">PahalaCup VIII</p>
+                    </div>
+                    <div class="list-entry">
+                        <div class="list-year">2024</div>
+                        <p class="list-title">Divisi Keamanan</p>
+                        <p class="list-sub">Pasto V</p>
+                    </div>
+                    <div class="list-entry">
+                        <div class="list-year">2023</div>
+                        <p class="list-title">Divisi Acara</p>
+                        <p class="list-sub">Gita Praja XVI</p>
+                    </div>
+                    <div class="list-entry">
+                        <div class="list-year">2019</div>
+                        <p class="list-title">Sekretaris</p>
+                        <p class="list-sub">Remas Nurul Ilmi</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer-final-fix">
+    <div class="footer-container-fix">
+        
+        <div class="footer-row-quote">
+            <p>"Satu Ruang, Sejuta Ilmu: Tempat di mana logika dan kreativitas bertemu untuk menghasilkan karya digital yang berdampak."</p>
+        </div>
+
+        <div class="footer-row-nav">
+            <a href="javascript:void(0)" onclick="showSection('home')">Beranda</a>
+            <span class="sep">|</span>
+            <a href="javascript:void(0)" onclick="showSection('about')">Profil</a>
+            <span class="sep">|</span>
+            <a href="javascript:void(0)" onclick="showSection('skills')">Keahlian</a>
+            <span class="sep">|</span>
+            <a href="javascript:void(0)" onclick="showSection('projects')">Karya</a>
+            <span class="sep">|</span>
+            <a href="javascript:void(0)" onclick="showSection('contact')">Kontak</a>
+        </div>
+
+        <div class="footer-row-social">
+            <a href="https://github.com/felisyaarsy22" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://wa.me/6285749839265" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com/felisyaarsy" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/felisya-kamilaturrosyidah-a7b399342" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="footer-row-copy">
+            <p>© 2026 Felisya Kamilaturrosyidah | Satu Ruang, Sejuta Ilmu</p>
+        </div>
+
+    </div>
+</footer>
+
+    <script>
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        applySavedTheme();
+    </script>
+</body>
+</html>
