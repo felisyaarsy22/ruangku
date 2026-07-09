@@ -1617,3 +1617,41 @@ body::before {
     object-fit: cover; /* Gambar akan terpotong rapi secara proporsional */
     object-position: top; /* Memperlihatkan screenshot bagian atas web/aplikasi */
 }
+
+/* Membuat pembungkus tombol berjejer ke samping */
+.project-links {
+    display: flex;
+    gap: 10px; /* Jarak antar tombol */
+    margin-top: auto; /* Memaksa tombol selalu berada di paling bawah card */
+    padding: 10px 0;
+}
+
+/* Mengatur style dasar kedua tombol agar seragam */
+.github-link, .live-link {
+    flex: 1; /* Membuat kedua tombol memiliki lebar yang sama rata */
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Warna tombol GitHub (sesuaikan dengan tema lamamu, misal biru tua/gelap) */
+.github-link {
+    background-color: #24292e;
+    color: #ffffff;
+}
+
+/* Warna tombol Live Website baru (misal warna biru cerah/khas Vercel agar kontras) */
+.live-link {
+    background-color: #0070f3;
+    color: #ffffff;
+}
+
+/* Efek hover saat kursor diarahkan ke tombol */
+.github-link:hover, .live-link:hover {
+    opacity: 0.9;
+    transform: translateY(-2px); /* Efek mengangkat sedikit */
+}
